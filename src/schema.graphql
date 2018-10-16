@@ -1,0 +1,15 @@
+type Mutation {
+  signup(name: String!, email: String!, password: String!): User!
+  signin(email: String!, password: String!): User!
+  signout: SuccessMessage
+  requestReset(email: String!): SuccessMessage
+  resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+}
+
+type Query {
+  me: User
+}
+
+type SuccessMessage {
+  message: String
+}
