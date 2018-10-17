@@ -13,3 +13,10 @@ type Query {
 type SuccessMessage {
   message: String
 }
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  # permissions: [Permission!]!
+}
