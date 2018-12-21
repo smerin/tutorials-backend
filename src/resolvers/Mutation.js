@@ -55,77 +55,26 @@ const Mutations = {
   async signout(parent, args, ctx, info) {
     ctx.response.clearCookie("token");
     return { message: "Signed out successfully!" };
+  },
+  async createLesson(parent, args, ctx, info) {
+    // 1. Check if user is logged in
+    const { userId } = ctx.request;
+    if (!userId) throw new Error("You must be logged in to do this");
+
+    // 2. TODO: Check user has permissions to create a tutorial
+    // TODO
+
+    // 3. Create the lesson
+    return ctx.db.mutation.createLesson(
+      {
+        data: {
+          user: { connect: { id: userId } },
+          ...args
+        }
+      },
+      info
+    );
   }
-  // async requestReset(parent, args, ctx, info) {
-  //   // 1. Check if this is a real user
-  //   const user = await ctx.db.query.user({ where: { email: args.email } });
-  //   if (!user) {
-  //     throw new Error(`No user found for email ${args.email}`);
-  //   }
-  //   // 2. Set a reset token and expiry
-  //   const resetToken = (await promisify(randomBytes)(20)).toString("hex");
-  //   const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
-  //   const res = await ctx.db.mutation.updateUser({
-  //     where: { email: args.email },
-  //     data: { resetToken, resetTokenExpiry }
-  //   });
-  //   // 3. Email them that reset token
-  //   // Consider a try / catch here to handle errors
-  //   const mailRes = await transport.sendMail({
-  //     from: "gsmerin@gmail.com",
-  //     to: user.email,
-  //     subject: "Your password reset",
-  //     html: makeANiceEmail(
-  //       `Your password reset token is here... \n\n<a href="${
-  //         process.env.FRONTEND_URL
-  //       }/reset?resetToken=${resetToken}">Click here to reset</a>`
-  //     )
-  //   });
-  //   // 4. Return the message
-  //   return { message: "Thanks!" };
-  // },
-  // async resetPassword(parent, args, ctx, info) {
-  //   // 1. Check if the passwords match
-  //   if (args.password !== args.confirmPassword) {
-  //     throw new Error(`Passwords do not match`);
-  //   }
-  //   // 2. Check if it's a legit reset token
-  //   // 3. Check if it's expired
-  //   const [user] = await ctx.db.query.users({
-  //     where: {
-  //       resetToken: args.resetToken,
-  //       resetTokenExpiry_gte: Date.now() - 3600000
-  //     }
-  //   });
-  //   if (!user) {
-  //     throw new Error(`This token is either invalid or expired`);
-  //   }
-  //   // 4. Hash their new password
-  //   const password = await bcrypt.hash(args.password, 10);
-  //   // 5. Save the new password to the user and remove old resetToken fields
-  //   const updatedUser = await ctx.db.mutation.updateUser(
-  //     {
-  //       where: {
-  //         id: user.id
-  //       },
-  //       data: {
-  //         password,
-  //         resetToken: null,
-  //         resetTokenExpiry: null
-  //       }
-  //     },
-  //     info
-  //   );
-  //   // 6. Generate JWT
-  //   const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
-  //   // 7. Set the JWT cookie
-  //   ctx.response.cookie("token", token, {
-  //     httpOnly: true,
-  //     maxAge: 1000 * 60 * 60 * 24 * 365
-  //   });
-  //   // 8. Return the new user
-  //   return updatedUser;
-  // }
 };
 
 module.exports = Mutations;

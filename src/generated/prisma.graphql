@@ -1,5 +1,9 @@
 # source: https://eu1.prisma.sh/george-smerin-9b6426/musiclessons/dev
-# timestamp: Tue Oct 16 2018 20:49:28 GMT+0100 (BST)
+# timestamp: Fri Dec 21 2018 16:32:24 GMT+0000 (Greenwich Mean Time)
+
+type AggregateLesson {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
@@ -10,6 +14,290 @@ type BatchPayload {
   count: Long!
 }
 
+type Lesson implements Node {
+  id: ID!
+  title: String!
+  description: String!
+  videoUrl: String!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type LessonConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LessonEdge]!
+  aggregate: AggregateLesson!
+}
+
+input LessonCreateInput {
+  title: String!
+  description: String!
+  videoUrl: String!
+  user: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type LessonEdge {
+  """The item at the end of the edge."""
+  node: Lesson!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LessonOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  videoUrl_ASC
+  videoUrl_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LessonPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+  videoUrl: String!
+}
+
+type LessonSubscriptionPayload {
+  mutation: MutationType!
+  node: Lesson
+  updatedFields: [String!]
+  previousValues: LessonPreviousValues
+}
+
+input LessonSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LessonSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LessonSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LessonSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LessonWhereInput
+}
+
+input LessonUpdateInput {
+  title: String
+  description: String
+  videoUrl: String
+  user: UserUpdateOneRequiredInput
+}
+
+input LessonUpdateManyMutationInput {
+  title: String
+  description: String
+  videoUrl: String
+}
+
+input LessonWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LessonWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LessonWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LessonWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  videoUrl: String
+
+  """All values that are not equal to given value."""
+  videoUrl_not: String
+
+  """All values that are contained in given list."""
+  videoUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  videoUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  videoUrl_lt: String
+
+  """All values less than or equal the given value."""
+  videoUrl_lte: String
+
+  """All values greater than the given value."""
+  videoUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  videoUrl_gte: String
+
+  """All values containing the given string."""
+  videoUrl_contains: String
+
+  """All values not containing the given string."""
+  videoUrl_not_contains: String
+
+  """All values starting with the given string."""
+  videoUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  videoUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  videoUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  videoUrl_not_ends_with: String
+  user: UserWhereInput
+}
+
+input LessonWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -17,11 +305,17 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createLesson(data: LessonCreateInput!): Lesson!
   createUser(data: UserCreateInput!): User!
+  updateLesson(data: LessonUpdateInput!, where: LessonWhereUniqueInput!): Lesson
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteLesson(where: LessonWhereUniqueInput!): Lesson
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertLesson(where: LessonWhereUniqueInput!, create: LessonCreateInput!, update: LessonUpdateInput!): Lesson!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyLessons(data: LessonUpdateManyMutationInput!, where: LessonWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyLessons(where: LessonWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -58,8 +352,11 @@ enum Permission {
 }
 
 type Query {
+  lessons(where: LessonWhereInput, orderBy: LessonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Lesson]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  lesson(where: LessonWhereUniqueInput!): Lesson
   user(where: UserWhereUniqueInput!): User
+  lessonsConnection(where: LessonWhereInput, orderBy: LessonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LessonConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -70,6 +367,7 @@ type Query {
 }
 
 type Subscription {
+  lesson(where: LessonSubscriptionWhereInput): LessonSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -100,6 +398,11 @@ input UserCreateInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreatepermissionsInput {
@@ -183,6 +486,15 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
@@ -192,8 +504,29 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
 }
 
+input UserUpdateManyMutationInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {

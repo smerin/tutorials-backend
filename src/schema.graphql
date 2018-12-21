@@ -1,13 +1,28 @@
+# import * from './generated/prisma.graphql'
+
 type Mutation {
   signup(name: String!, email: String!, password: String!): User!
   signin(email: String!, password: String!): User!
   signout: SuccessMessage
   requestReset(email: String!): SuccessMessage
-  resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+  resetPassword(
+    resetToken: String!
+    password: String!
+    confirmPassword: String!
+  ): User!
+  createLesson(title: String!, description: String!, videoUrl: String!): Lesson!
 }
 
 type Query {
   me: User
+  lessons(
+    where: LessonWhereInput
+    orderby: LessonOrderByInput
+    skip: Int
+    first: Int
+  ): [Lesson]!
+  lesson(where: LessonWhereUniqueInput!): Lesson
+  lessonsConnection(where: LessonWhereInput): LessonConnection!
 }
 
 type SuccessMessage {
