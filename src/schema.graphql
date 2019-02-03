@@ -10,7 +10,12 @@ type Mutation {
     password: String!
     confirmPassword: String!
   ): User!
-  createLesson(title: String!, description: String!, videoUrl: String!): Lesson!
+  createLesson(
+    title: String!
+    slug: String!
+    description: String!
+    videoUrl: String!
+  ): Lesson!
 }
 
 type Query {

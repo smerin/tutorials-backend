@@ -16,6 +16,7 @@ type User {
 type Lesson {
   id: ID! @unique
   title: String!
+  slug: String!
   description: String!
   videoUrl: String!
   user: User!
